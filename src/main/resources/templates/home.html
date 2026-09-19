@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ShopNamTrung</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+    <script defer th:src="@{/js/graphql-client.js}"></script>
+    <script defer th:src="@{/js/home.js}"></script>
+</head>
+<body th:attr="data-context-path=@{/}">
+    <header th:replace="~{fragments/common :: topbar}"></header>
+
+    <main class="store-content">
+        <section class="home-hero">
+            <div>
+                <h1>Sản phẩm ShopNamTrung</h1>
+                <p>Sản phẩm được hiển thị theo giá từ thấp đến cao.</p>
+            </div>
+            <label class="category-filter" for="home-category">
+                <span>Lọc theo danh mục</span>
+                <select id="home-category">
+                    <option value="">Tất cả danh mục</option>
+                </select>
+            </label>
+        </section>
+
+        <div id="home-message" class="alert" hidden></div>
+        <p class="result-summary" id="home-result-summary">
+            Đang tải sản phẩm...
+        </p>
+        <section class="product-grid" id="home-product-grid"></section>
+    </main>
+
+    <footer th:replace="~{fragments/common :: footer}"></footer>
+</body>
+</html>

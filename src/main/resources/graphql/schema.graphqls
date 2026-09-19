@@ -1,0 +1,88 @@
+type Query {
+    categories: [Category!]!
+    categoryById(id: ID!): Category
+    categoryPage(keyword: String = "", page: Int = 0, size: Int = 5): CategoryPage!
+
+    productsByPriceAsc: [Product!]!
+    productsByCategory(categoryId: ID!): [Product!]!
+    productById(id: ID!): Product
+    productPage(keyword: String = "", page: Int = 0, size: Int = 5): ProductPage!
+}
+
+type Mutation {
+    createCategory(input: CategoryInput!): CategoryMutationPayload!
+    updateCategory(id: ID!, input: CategoryInput!): CategoryMutationPayload!
+    deleteCategory(id: ID!): DeleteMutationPayload!
+
+    createProduct(input: ProductInput!): ProductMutationPayload!
+    updateProduct(id: ID!, input: ProductInput!): ProductMutationPayload!
+    deleteProduct(id: ID!): DeleteMutationPayload!
+}
+
+type Category {
+    id: ID!
+    name: String!
+    icon: String
+}
+
+type Product {
+    id: ID!
+    name: String!
+    quantity: Int!
+    price: Float!
+    image: String
+    description: String
+    category: Category!
+}
+
+type CategoryPage {
+    content: [Category!]!
+    currentPage: Int!
+    totalPages: Int!
+    totalItems: Int!
+    pageSize: Int!
+    first: Boolean!
+    last: Boolean!
+}
+
+type ProductPage {
+    content: [Product!]!
+    currentPage: Int!
+    totalPages: Int!
+    totalItems: Int!
+    pageSize: Int!
+    first: Boolean!
+    last: Boolean!
+}
+
+input CategoryInput {
+    name: String!
+    icon: String
+}
+
+input ProductInput {
+    name: String!
+    quantity: Int!
+    price: Float!
+    image: String
+    description: String
+    categoryId: ID!
+}
+
+type CategoryMutationPayload {
+    success: Boolean!
+    message: String!
+    category: Category
+}
+
+type ProductMutationPayload {
+    success: Boolean!
+    message: String!
+    product: Product
+}
+
+type DeleteMutationPayload {
+    success: Boolean!
+    message: String!
+    deletedId: ID
+}

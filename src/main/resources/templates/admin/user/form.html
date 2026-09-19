@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="${formTitle}">Người dùng</title>
+    <link rel="stylesheet" th:href="@{/css/admin.css}">
+</head>
+<body>
+    <header th:replace="~{fragments/common :: topbar}"></header>
+    <div class="admin-layout">
+        <aside th:replace="~{fragments/common :: sidebar(${activeMenu})}"></aside>
+        <main class="main-content">
+            <div class="page-heading">
+                <div>
+                    <h1 th:text="${formTitle}">Người dùng</h1>
+                    <p>Nhập đầy đủ thông tin tài khoản bên dưới.</p>
+                </div>
+            </div>
+
+            <div class="card form-card user-form-card">
+                <form method="post"
+                      th:action="@{/admin/users/save}"
+                      th:object="${user}">
+                    <input type="hidden" th:field="*{id}">
+                    <div class="alert error block-error"
+                         th:if="${#fields.hasGlobalErrors()}"
+                         th:each="error : ${#fields.globalErrors()}"
+                         th:text="${error}"></div>
+
+                    <div class="form-grid">
+                        <div class="form-group">
+                            <label for="userName">
+                                Tên đăng nhập <span>*</span>
+                            </label>
+                            <input id="userName"
+                                   th:field="*{userName}"
+                                   maxlength="50"
+                                   autocomplete="username">
+                            <span class="field-error"
+                                  th:errors="*{userName}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="fullName">
+                                Họ và tên <span>*</span>
+                            </label>
+                            <input id="fullName"
+                                   th:field="*{fullName}"
+                                   maxlength="100">
+                            <span class="field-error"
+                                  th:errors="*{fullName}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="email">Email <span>*</span></label>
+                            <input id="email"
+                                   th:field="*{email}"
+                                   type="email"
+                                   maxlength="100">
+                            <span class="field-error" th:errors="*{email}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="phone">Số điện thoại <span>*</span></label>
+                            <input id="phone"
+                                   th:field="*{phone}"
+                                   maxlength="11"
+                                   inputmode="numeric">
+                            <span class="field-error" th:errors="*{phone}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="passWord">
+                                Mật khẩu <span th:if="${user.id == null}">*</span>
+                            </label>
+                            <input id="passWord"
+                                   th:field="*{passWord}"
+                                   type="password"
+                                   maxlength="72"
+                                   autocomplete="new-password">
+                            <small th:if="${user.id != null}">
+                                Để trống nếu không muốn đổi mật khẩu.
+                            </small>
+                            <span class="field-error" th:errors="*{passWord}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="roleid">Vai trò <span>*</span></label>
+                            <select id="roleid" th:field="*{roleid}">
+                                <option value="1">Admin</option>
+                                <option value="2">Manager</option>
+                                <option value="3">User</option>
+                            </select>
+                            <span class="field-error" th:errors="*{roleid}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="avatar">Ảnh đại diện/đường dẫn ảnh</label>
+                            <input id="avatar" th:field="*{avatar}" maxlength="255">
+                            <span class="field-error" th:errors="*{avatar}"></span>
+                        </div>
+
+                        <div class="form-group">
+                            <label for="createdDate">Ngày tạo</label>
+                            <input id="createdDate"
+                                   th:field="*{createdDate}"
+                                   type="date">
+                            <span class="field-error"
+                                  th:errors="*{createdDate}"></span>
+                        </div>
+                    </div>
+
+                    <div class="form-actions">
+                        <button class="btn btn-primary" type="submit">Lưu thông tin</button>
+                        <a class="btn btn-light" th:href="@{/admin/users}">Hủy</a>
+                    </div>
+                </form>
+            </div>
+        </main>
+    </div>
+    <footer th:replace="~{fragments/common :: footer}"></footer>
+</body>
+</html>

@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="vi" xmlns:th="http://www.thymeleaf.org">
+<body>
+    <header class="topbar" th:fragment="topbar">
+        <a class="brand" th:href="@{/}">ShopNamTrung</a>
+        <nav class="topbar-actions">
+            <a th:href="@{/}">Trang chủ</a>
+            <a th:href="@{/admin/categories}">Quản trị</a>
+            <a th:href="@{/graphiql}" target="_blank">GraphiQL</a>
+        </nav>
+    </header>
+
+    <aside class="sidebar" th:fragment="sidebar(activeMenu)">
+        <a class="nav-item"
+           th:classappend="${activeMenu == 'category'} ? 'active'"
+           th:href="@{/admin/categories}">Danh mục</a>
+        <a class="nav-item"
+           th:classappend="${activeMenu == 'product'} ? 'active'"
+           th:href="@{/admin/products}">Sản phẩm</a>
+        <a class="nav-item"
+           th:classappend="${activeMenu == 'user'} ? 'active'"
+           th:href="@{/admin/users}">Người dùng</a>
+    </aside>
+
+    <footer class="footer" th:fragment="footer">
+        Trần Nam Trung - 24162134
+    </footer>
+</body>
+</html>
