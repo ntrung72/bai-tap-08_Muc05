@@ -96,10 +96,7 @@ public class ShopGraphqlController {
         category.setIcon(trimToNull(input.getIcon()));
         Category savedCategory = categoryService.save(category);
 
-        return new CategoryMutationPayload(
-                true,
-                "Thêm danh mục thành công.",
-                savedCategory);
+        return new CategoryMutationPayload(true, "Thêm danh mục thành công.", savedCategory);
     }
 
     @MutationMapping
@@ -132,10 +129,7 @@ public class ShopGraphqlController {
             deleteImage(oldIcon);
         }
 
-        return new CategoryMutationPayload(
-                true,
-                "Cập nhật danh mục thành công.",
-                savedCategory);
+        return new CategoryMutationPayload(true, "Cập nhật danh mục thành công.", savedCategory);
     }
 
     @MutationMapping
@@ -146,19 +140,13 @@ public class ShopGraphqlController {
             category = categoryService.findById(id);
             categoryService.deleteById(id);
         } catch (DataIntegrityViolationException ex) {
-            return new DeleteMutationPayload(
-                    false,
-                    "Không thể xóa vì danh mục đang được sản phẩm sử dụng.",
-                    null);
+            return new DeleteMutationPayload(false, "Không thể xóa vì danh mục đang được sản phẩm sử dụng.", null);
         } catch (IllegalArgumentException ex) {
             return new DeleteMutationPayload(false, ex.getMessage(), null);
         }
 
         deleteImage(category.getIcon());
-        return new DeleteMutationPayload(
-                true,
-                "Xóa danh mục thành công.",
-                id);
+        return new DeleteMutationPayload(true, "Xóa danh mục thành công.", id);
     }
 
     @MutationMapping
@@ -173,20 +161,14 @@ public class ShopGraphqlController {
         try {
             category = categoryService.findById(input.getCategoryId());
         } catch (IllegalArgumentException ex) {
-            return new ProductMutationPayload(
-                    false,
-                    "Danh mục không tồn tại.",
-                    null);
+            return new ProductMutationPayload(false, "Danh mục không tồn tại.", null);
         }
 
         Product product = new Product();
         setProductData(product, input, category, trimToNull(input.getImage()));
         Product savedProduct = productService.save(product);
 
-        return new ProductMutationPayload(
-                true,
-                "Thêm sản phẩm thành công.",
-                savedProduct);
+        return new ProductMutationPayload(true, "Thêm sản phẩm thành công.", savedProduct);
     }
 
     @MutationMapping
@@ -210,10 +192,7 @@ public class ShopGraphqlController {
         try {
             category = categoryService.findById(input.getCategoryId());
         } catch (IllegalArgumentException ex) {
-            return new ProductMutationPayload(
-                    false,
-                    "Danh mục không tồn tại.",
-                    null);
+            return new ProductMutationPayload(false, "Danh mục không tồn tại.", null);
         }
 
         String oldImage = product.getImage();
@@ -226,10 +205,7 @@ public class ShopGraphqlController {
             deleteImage(oldImage);
         }
 
-        return new ProductMutationPayload(
-                true,
-                "Cập nhật sản phẩm thành công.",
-                savedProduct);
+        return new ProductMutationPayload(true, "Cập nhật sản phẩm thành công.", savedProduct);
     }
 
     @MutationMapping
@@ -244,10 +220,7 @@ public class ShopGraphqlController {
         }
 
         deleteImage(product.getImage());
-        return new DeleteMutationPayload(
-                true,
-                "Xóa sản phẩm thành công.",
-                id);
+        return new DeleteMutationPayload(true, "Xóa sản phẩm thành công.", id);
     }
 
     private String validateCategory(CategoryInput input, Integer excludedId) {
